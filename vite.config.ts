@@ -1,16 +1,19 @@
-import tailwindcss from '@tailwindcss/vite';
-import react from '@vitejs/plugin-react';
-import path from 'path';
-import { defineConfig, loadEnv } from 'vite';
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+import { defineConfig, loadEnv } from 'vite'
+import path from 'path'
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, '.', '');
+  const env = loadEnv(mode, process.cwd(), '')
 
   return {
-    // 👇 CLAVE PARA GITHUB PAGES
-    base: '/web-demo-diparmamotors/',
+    // 🔥 CLAVE ABSOLUTA PARA QUE CARGUE EN TODOS LADOS
+    base: './',
 
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss(),
+    ],
 
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
@@ -21,11 +24,5 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, '.'),
       },
     },
-
-    server: {
-      // 👇 esto SOLO sirve para Render / dev, no molesta
-      allowedHosts: ['web-demo-diparmamotors.onrender.com'],
-      hmr: process.env.DISABLE_HMR !== 'true',
-    },
-  };
-});
+  }
+})
